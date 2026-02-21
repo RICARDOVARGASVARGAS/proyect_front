@@ -59,9 +59,19 @@ watch(() => props.category, (val) => {
     }
 }, { immediate: true })
 
+function validate() {
+  errors.value = {}
+  if (!form.value.name || form.value.name.trim().length < 3) {
+    errors.value.name = ['El nombre es requerido y debe tener al menos 3 caracteres.']
+  }
+  return Object.keys(errors.value).length === 0
+}
+
 async function handleSubmit() {
     errors.value = {}
     alert.value = { message: null, type: 'error' }
+
+    if (!validate()) return
 
     const result = props.category
         ? await store.update(props.category.id, form.value)

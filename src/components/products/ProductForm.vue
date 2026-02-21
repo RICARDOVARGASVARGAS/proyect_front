@@ -98,9 +98,31 @@ watch(
   { immediate: true },
 );
 
+function validate() {
+  errors.value = {};
+  if (!form.value.name || form.value.name.trim().length < 3) {
+    errors.value.name = [
+      "El nombre es requerido y debe tener al menos 3 caracteres.",
+    ];
+  }
+  if (!form.value.price || Number(form.value.price) <= 0) {
+    errors.value.price = ["El precio es requerido y debe ser mayor a 0."];
+  }
+  if (
+    form.value.stock === "" ||
+    form.value.stock === null ||
+    Number(form.value.stock) < 0
+  ) {
+    errors.value.stock = ["El stock es requerido y debe ser 0 o mayor."];
+  }
+  return Object.keys(errors.value).length === 0;
+}
+
 async function handleSubmit() {
   errors.value = {};
   alert.value = { message: null, type: "error" };
+
+  if (!validate()) return;
 
   const result = props.product
     ? await store.update(props.product.id, form.value)
