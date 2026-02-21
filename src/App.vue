@@ -15,6 +15,13 @@
       >
         Categorías
       </RouterLink>
+      <RouterLink
+        to="/products"
+        class="text-sm font-medium text-gray-600 hover:text-blue-600 transition"
+        active-class="text-blue-600"
+      >
+        Productos
+      </RouterLink>
     </nav>
 
     <main>
